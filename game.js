@@ -42,9 +42,9 @@ function backToMenu() {
     game_over = false;
 }
 
-var tutorial = [[0, 0, 0, 0, 0]
-               ,[0, 2, 1, 1, 0]
-               ,[0, 0, 0, 0, 0]];
+var tutorial = [[0, 0, 0, 0, 0, 0, 0]
+               ,[0, 2, 1, 2, 1, 1, 0]
+               ,[0, 0, 0, 0, 0, 0, 0]];
 
 var level_1 = [[0, 0, 0, 1, 1, 1, 0, 0, 0]
               ,[0, 0, 0, 1, 1, 1, 0, 0, 0]
@@ -171,17 +171,23 @@ function renderMaquette() {
             ]));
       if (lvl_xid == 0) {
           var text = [h("div.text", {key: -777}, "Click the rightmost red block")];
-          if (selected.x == 1 && selected.y == 3) {
+          if (selected.x == 1 && selected.y == 5) {
               text = [h("div.text", {key: -777}, "Click on the yellow box to eat"),
-                      h("div.text", {key: -778}, "the block in the middle!")];
+                      h("div.text", {key: -778}, "the block in the way!")];
           }
-          if (score == 1) {
+          if (score == 2) {
               text = [h("div.text", {key: -777}, "Congrats! You have eaten your first block"),
                       h("div.text", {key: -778}, "The goal is to eat the most blocks"),
                       h("div.text", {key: -779}, "Note you can only jump a max of two blocks"),
                       h("div.text", {key: -780}, "And you must eat a block per jump"),
-                      h("div.text", {key: -781}, "Give the real levels a try now!"),
+                      h("div.text", {key: -781}, "Try to eat the leftmost block!")
                      ];
+          }
+          if (score == 1) {
+              text = [h("div.text", {key: -777}, "Congrats! You have finished the tutorial"),
+                      h("div.text", {key: -778}, "You can check the real levels now ;)")
+                      ];
+                      
           }
           ls[0] = h("div.left", {key: -100}, [ls[0], h("div.tutorial_text", text)]);
       }
