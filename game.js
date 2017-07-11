@@ -25,14 +25,17 @@ function recalculateScore() {
 function startGame(xid) {
     return function(evt) {
         lvl = deepClone(lvs[xid]);
-        mg = lvl.map(function(r, x_pos) {
-            return r.map(function(el, y_pos) {
-                return hand(x_pos, y_pos);
-            });
-        });
         recalculateScore();
         lvl_xid = xid;
+        selected = {x : -1, y : -1};
         game_over = false;
+    }
+}
+
+function nextLevel(evt) {
+    if (lvs[lvl_xid+1]) {
+        var cb = startGame(lvl_xid+1);
+        return cb(evt);
     }
 }
 
@@ -67,10 +70,22 @@ var lvs = [tutorial, level_1, level_2];
 var lvl_xid = -1;
 var lvl = null;
 
-var levels = [{ xid : "Tutorial", cb : startGame(0)}
+var levels = [{ xid : 0, name: "Tutorial", cb : startGame(0)}
              ,{ xid : 1, cb : startGame(1)}
              ,{ xid : 2, cb : startGame(2)}];
 
+        
+var mg = [];
+(function() {
+    for (var x_pos = 0; x_pos < 16; x_pos++) {
+        var curr = [];
+        for (var y_pos = 0; y_pos < 16; y_pos++) {
+            curr.push(hand(x_pos, y_pos));
+        };
+        mg.push(curr);
+    }
+})();
+             
 function is_possible_gen(selected, x, y) {
     if (selected.x >= 0 && selected. y >= 0) {
         var ix = (x + selected.x)/2;
@@ -148,7 +163,6 @@ function hand(x, y) {
     };
 }
 
-var mg = null;
 var score = -1;
 
 
@@ -173,7 +187,7 @@ function renderMaquette() {
           var text = [h("div.text", {key: -777}, "Click the rightmost red block")];
           if (selected.x == 1 && selected.y == 5) {
               text = [h("div.text", {key: -777}, "Click on the yellow box to eat"),
-                      h("div.text", {key: -778}, "the block in the way!")];
+                      h("div.text", {key: -778}, "the block in its way!")];
           }
           if (score == 2) {
               text = [h("div.text", {key: -777}, "Congrats! You have eaten your first block"),
@@ -192,8 +206,9 @@ function renderMaquette() {
           ls[0] = h("div.left", {key: -100}, [ls[0], h("div.tutorial_text", text)]);
       }
       ls.push(h("div.right", {key : -101}, [
-                h("div.button", {enterAnimation : buttonEnter, onclick : backToMenu}, "Main Menu"),
-                h("div.score", "Score: " + score),
+                h("div.button", {key: -36, enterAnimation : buttonEnter, onclick : backToMenu}, "Main Menu"),
+                h("div.button", {key: -40, enterAnimation : buttonEnter, onclick : nextLevel, classes : {disabled : (!lvs[lvl_xid+1])}}, "Next Level"),
+                h("div.score", {key: "score"}, "Score: " + score),
             ]));
     return h('div.game', {key: -1337, enterAnimation: itemEnter, exitAnimation : itemExit, classes : { "menu" : true, "game_sys" : true } }, ls);
   } else {
@@ -201,11 +216,11 @@ function renderMaquette() {
             h("div.left", {key: -200}, [
                 h("div.text", { classes: { "text_big" : true } } , "Remainder!"),
                 h("div.text", "A boring game I just came up with"),
-                h("div.text", "- Exio"),
+                h("div.text", "~ Exio"),
             ]), 
             h("div.right", {key: -201}, 
                 levels.map(function(el) {
-                    return h("div.button", { enterAnimation : buttonEnter, key: "l"+el.xid, onclick: el.cb }, "Start " + ((typeof el.xid === "number") ? ("Level " + el.xid) : el.xid))
+                    return h("div.button", { key: -48, enterAnimation : buttonEnter, key: "l"+el.xid, onclick: el.cb }, "Start " + (el.name ? el.name : ("Level " + el.xid)))
                 })
             )
         ]);
