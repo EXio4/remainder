@@ -170,21 +170,23 @@ function renderMaquette() {
                 })
             ]));
       if (lvl_xid == 0) {
-          var text = [ls[0], h("div.text", {key: -777}, "Click the rightmost red block")];
+          var text = [h("div.text", {key: -777}, "Click the rightmost red block")];
           if (selected.x == 1 && selected.y == 3) {
-              text = [ls[0], h("div.text", {key: -777}, "Click on the yellow box to eat"),
-                             h("div.text", {key: -778}, "the block in the middle!")];
+              text = [h("div.text", {key: -777}, "Click on the yellow box to eat"),
+                      h("div.text", {key: -778}, "the block in the middle!")];
           }
           if (score == 1) {
-              text = [ls[0], h("div.text", {key: -777}, "Congrats! You have eaten your first block"),
-                             h("div.text", {key: -778}, "The goal is to eat the most blocks"),
-                             h("div.text", {key: -779}, "Give the real levels a try now!"),
+              text = [h("div.text", {key: -777}, "Congrats! You have eaten your first block"),
+                      h("div.text", {key: -778}, "The goal is to eat the most blocks"),
+                      h("div.text", {key: -779}, "Note you can only jump a max of two blocks"),
+                      h("div.text", {key: -780}, "And you must eat a block per jump"),
+                      h("div.text", {key: -781}, "Give the real levels a try now!"),
                      ];
           }
-          ls[0] = h("div.left", {key: -100}, text);
+          ls[0] = h("div.left", {key: -100}, [ls[0], h("div.tutorial_text", text)]);
       }
       ls.push(h("div.right", {key : -101}, [
-                h("div.button", {enterAnimation : buttonEnter, onclick : backToMenu}, "Main menu"),
+                h("div.button", {enterAnimation : buttonEnter, onclick : backToMenu}, "Main Menu"),
                 h("div.score", "Score: " + score),
             ]));
     return h('div.game', {key: -1337, enterAnimation: itemEnter, exitAnimation : itemExit, classes : { "menu" : true, "game_sys" : true } }, ls);

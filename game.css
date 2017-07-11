@@ -80,10 +80,13 @@ body {
     border-style: solid;
     border-color: #444444;
     border-collapse: collapse;
-    filter: drop-shadow(4px 4px 4px gray);
+    filter: drop-shadow(0.4vmax 0.4vmax 0.4vmax gray);
     margin: 3%;
 }
 
+.tutorial_text {
+    height: 25vh;
+}
 
 .menu {
   text-align:center;
@@ -108,22 +111,29 @@ body {
 }
 
 .text {
-    width: 240px;
+    width: 24vmax;
 }
 .text_big {
-    font-size: 32px;
-    text-shadow: 15px 15px 15px red;
+    font-size: 3.2vmax;
+    text-shadow: 1.5vmax 1.5vmax 1.5vmax red;
     margin-bottom : 2vh;
 }
 
+.text_very_big {
+    font-size: 4vmax;
+    text-shadow: 1.5vmax 1.5vmax 1.5vmax red;
+    margin-bottom : 2.5vh;
+}
+
+
 .score {
     margin-top : 2vh;
-    font-size: 16px;
+    font-size: 1.6vmax;
 }
 
 .button {
     width: 100%;
-    border: 2px solid grey;
+    border: 0.2vmax solid grey;
     background-color: rgba(0, 0, 0, 0.25);
     margin-top : 2vh;
     cursor: pointer;
