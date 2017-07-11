@@ -1,0 +1,140 @@
+
+html {
+  font: normal normal normal  14px/20px sans-serif;
+  height: 100%;
+}
+
+body {
+  margin:0;padding:0;
+  height:100%;
+  display: -webkit-flex;
+  display: flex;
+  overflow-x: hidden;
+}
+
+.game:before { 
+  content: "";
+  position:absolute;
+  top:0;bottom:0;
+  left:0;right:0;
+  background: linear-gradient(to bottom, #400 0%, #404 40%, #400 80%, #404 100%);
+  filter: blur(5px);
+  z-index: -1;
+}
+
+.game {
+  z-index: 9999;
+  position: absolute;
+  top:0;bottom:0;
+  left:0;right:0;
+  overflow: hidden;
+}
+.game_sys {
+  display: -webkit-flex;
+  display:flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-items:center;
+  align-items:center;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+}
+
+.slot {
+    -webkit-transition: all 200ms linear;
+    -moz-transition: all 200ms linear;
+    -ms-transition: all 200ms linear;
+    transition: all 200ms linear;
+    border-top: 0.15vmax solid red;
+    border-left: 0.15vmax solid red;
+    width: 9vmin;
+    height: 9vmin;
+    cursor: pointer;
+}
+
+.dot {
+    background: radial-gradient(circle, #880000 0%, #AA0000 50%);
+}
+
+.dot_selected {
+    border: 0.15vmax solid white;
+    background: radial-gradient(circle, #880000 0%, #AA0000 50%);
+}
+
+.dot_possible {
+    border: 0.15vmax solid #ff0;
+    background: linear-gradient(to top left, #333 0%, #666, 20%, #333 50%, #666 55%, #333 100%);
+}
+
+.void {
+    background: linear-gradient(to bottom right, #000000 0%, #333, 20%, #000 50%, #333 55%, #000000 100%);
+}
+
+.empty {
+    background: linear-gradient(to top left, #333 0%, #666, 20%, #333 50%, #666 55%, #333 100%);
+    z-index: 5;
+}
+
+
+.board {
+    border-style: solid;
+    border-color: #444444;
+    border-collapse: collapse;
+    filter: drop-shadow(4px 4px 4px gray);
+    margin: 3%;
+}
+
+
+.menu {
+  text-align:center;
+  white-space: nowrap;
+  text-shadow:0 0 10px red;
+  color:orange;  
+  font-weight:bold;
+  
+  align-items:center;
+  
+  justify-content: space-around;
+  
+  flex-wrap: wrap-reverse;
+  
+  
+  display: -webkit-flex;
+  display:flex;
+}
+
+.disabled {
+    filter : grayscale(70%);
+}
+
+.text {
+    width: 240px;
+}
+.text_big {
+    font-size: 32px;
+    text-shadow: 15px 15px 15px red;
+    margin-bottom : 2vh;
+}
+
+.score {
+    margin-top : 2vh;
+    font-size: 16px;
+}
+
+.button {
+    width: 100%;
+    border: 2px solid grey;
+    background-color: rgba(0, 0, 0, 0.25);
+    margin-top : 2vh;
+    cursor: pointer;
+}
+
+.right {
+    margin-top: 2.5vh;
+    
+    flex-wrap: wrap;
+    
+    
+    display: -webkit-flex;
+    display:flex;
+}
