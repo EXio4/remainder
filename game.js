@@ -65,14 +65,65 @@ var level_2 = [[0, 0, 0, 0, 1, 1, 1, 1, 1]
               ,[0, 1, 1, 1, 1, 1, 0, 0, 0]
               ,[1, 1, 1, 1, 1, 0, 0, 0, 0]];
 
-var lvs = [tutorial, level_1, level_2];
+
+var rnd = [[]];
+              
+var lvs = [tutorial, level_1, level_2, rnd];
+
+var bsd = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 2, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0, 0, 0, 0]]
            
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min +1)) + min; 
+}
+
+function recreateRandomLevel() {
+    rnd = deepClone(bsd);
+    function createRandLevel(cx, cy) {
+        var rng = getRandomInt(1,3);
+        for (var _x = -rng; _x < rng; _x++) {
+            var _y = getRandomInt(-1, 1);
+            var X = cx + _x;
+            var Y = cy + _y;
+            if (X < 0 || X >= 9 || Y < 0 || Y >= 9) continue;
+            var r = rnd[X][Y] == 1;
+            if (rnd[X][Y] == 0) {
+                rnd[X][Y] = 1;
+            }
+            if (!r && getRandomInt(1, 20) < 15) {
+                createRandLevel(X,Y);
+            }
+        }
+    }
+    createRandLevel(5,5);    
+    for (var i=0; i<9; i++) {
+        rnd[i][0] = 0;
+        rnd[i][8] = 0;
+        rnd[0][i] = 0;
+        rnd[8][i] = 0;
+    }
+    lvs[3] = rnd;
+}
+
+recreateRandomLevel();
+
 var lvl_xid = -1;
 var lvl = null;
 
 var levels = [{ xid : 0, name: "Tutorial", cb : startGame(0)}
              ,{ xid : 1, cb : startGame(1)}
-             ,{ xid : 2, cb : startGame(2)}];
+             ,{ xid : 2, cb : startGame(2)}
+             ,{ xid : 3, name : "Random beast!", cb : startGame(3)}];
 
         
 var mg = [];
@@ -192,7 +243,7 @@ function renderMaquette() {
           if (score == 2) {
               text = [h("div.text", {key: -777}, "Congrats! You have eaten your first block"),
                       h("div.text", {key: -778}, "The goal is to eat the most blocks"),
-                      h("div.text", {key: -779}, "Note you can only jump a max of two blocks"),
+                      h("div.text", {key: -779}, "Note you can only jump one block at once"),
                       h("div.text", {key: -780}, "And you must eat a block per jump"),
                       h("div.text", {key: -781}, "Try to eat the leftmost block!")
                      ];
